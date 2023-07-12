@@ -127,7 +127,7 @@ func mutatePod(w http.ResponseWriter, r *http.Request) {
 	admissionResponse := &admissionv1.AdmissionResponse{}
 	var patch string
 	patchType := v1.PatchTypeJSONPatch
-	if _, ok := nodeSelector["node-name"]; !ok {
+	if _, ok := nodeSelector["node-name"]; ok {
 		patch = `[{"op":"remove","path":"/spec/nodeSelector/node-name"}]`
 	}
 

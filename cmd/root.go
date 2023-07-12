@@ -118,13 +118,16 @@ func mutatePod(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	podSpec := pod.Spec
+	nodeSelector := podSpec.NodeSelector
+
 	// Create a response that will add a label to the pod if it does
 	// not already have a label with the key of "hello". In this case
 	// it does not matter what the value is, as long as the key exists.
 	admissionResponse := &admissionv1.AdmissionResponse{}
 	var patch string
 	patchType := v1.PatchTypeJSONPatch
-	if _, ok := pod.Labels["node-name"]; !ok {
+	if _, ok := nodeSelector["node-name"]; ok {
 		patch = `[{"op":"remove","path":"/spec/nodeSelector/node-name"}]`
 	}
 

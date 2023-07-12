@@ -124,8 +124,8 @@ func mutatePod(w http.ResponseWriter, r *http.Request) {
 	admissionResponse := &admissionv1.AdmissionResponse{}
 	var patch string
 	patchType := v1.PatchTypeJSONPatch
-	if _, ok := pod.Labels["hello"]; !ok {
-		patch = `[{"op":"add","path":"/metadata/labels","value":{"hello":"world"}}]`
+	if _, ok := pod.Labels["node-name"]; !ok {
+		patch = `[{"op":"remove","path":"/spec/nodeSelector/node-name"}]`
 	}
 
 	admissionResponse.Allowed = true
